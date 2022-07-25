@@ -1,0 +1,48 @@
+# Coded by AzureVoidSky.
+puts (scale :C, :hex_sus)
+# [60, 62, 65, 67, 69, 70, 72]
+use_debug false
+use_cue_logging false
+
+live_loop :low do
+  use_random_seed 10
+  loop do
+    notes = (scale :C, :hex_sus)
+    play choose(notes), amp: 0.4
+    #sleep choose([0.25, 0.25, 0.5, 0.25, 0.125])
+    sleep 0.25
+  end
+end
+
+live_loop :low_phasing do
+  use_random_seed 10
+  loop do
+    notes = (scale :C, :hex_sus)
+    play choose(notes), amp: 0.4
+    #sleep choose([0.25, 0.25, 0.5, 0.25, 0.125])
+    sleep 0.25
+    sleep 0.005
+  end
+end
+
+live_loop :kick do
+  sample :drum_heavy_kick
+  sleep 0.5
+end
+
+live_loop :hat do
+  sample :drum_cymbal_closed, amp: 0.123
+  sleep 0.25
+end
+
+live_loop :bass, room: 2, mix: 0.8 do
+  with_fx :slicer do
+    with_fx :reverb do
+      tick
+      notes = [65,62,70,69]
+      # :fm suits the style more but :tech_saws have me like ^_^
+      synth :fm, amp: 0.4, sustain: 3, note: notes.look - 12
+      sleep 4
+    end
+  end
+end
